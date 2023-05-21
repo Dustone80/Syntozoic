@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import IO.Input;
 import display.Display;
+import graphics.Textures;
 import util.Time;
 
 public class Game implements Runnable
@@ -13,20 +14,19 @@ public class Game implements Runnable
 	public static final int	WIDTH = 800;
 	public static final int	HEIGHT = 600;
 	public static final String TITLE = "Syntozoic";
-	public static final int	CLEAR_COLOR	= 0xff000000;
+	public static final int	CLEAR_COLOR	= 0xff00ff00;
 	public static final int	NUM_BUFFERS	= 3;
+	public static final String Textures_Atlas = "texture_atlas.png";
 
 	public static final float UPDATE_RATE = 60.0f;
 	public static final float UPDATE_INTERVAL = Time.SECOND / UPDATE_RATE;
 	public static final long IDLE_TIME	= 1;
-
-	//public static final String	ATLAS_FILE_NAME	= "texture_atlas.png";
-
 	private boolean	running;
 	private Thread	gameThread;
 	private Graphics2D graphics;
 	private Input input;
-
+	private Textures textures;
+ 
     //temp
     float x = 350;
     float y = 250;
@@ -34,9 +34,8 @@ public class Game implements Runnable
 
     float radius = 50;
     float speed = 3;
-    //emd_temp
-	/*private TextureAtlas		atlas;
-	private Player				player;*/
+    //end_temp;
+
 
 	public Game() {
 		running = false;
@@ -44,8 +43,7 @@ public class Game implements Runnable
 		graphics = Display.getGraphics();
 		input = new Input();
 		Display.addInputListener(input);
-		/*atlas = new TextureAtlas(ATLAS_FILE_NAME);
-		player = new Player(300, 300, 2, 3, atlas);*/
+		textures = new Textures(Textures_Atlas);
 	}
     public void update()
     {
@@ -96,10 +94,8 @@ public class Game implements Runnable
 	}
 
 	private void render() {
-		//Display.clear();
-		//Display.render(graphics);
-        graphics.setColor(Color.YELLOW);
-        graphics.fillOval((int)(x+(Math.sin(delta)*200)),(int)(y),(int)(radius*2),(int)(radius*2) );
+		graphics.drawImage(textures.cut(0,0 ,632,623), 300,300,null);
+        //graphics.fillOval((int)(x+(Math.sin(delta)*200)),(int)(y),(int)(radius*2),(int)(radius*2) );
 		Display.swapBuffers();
 	}
 
